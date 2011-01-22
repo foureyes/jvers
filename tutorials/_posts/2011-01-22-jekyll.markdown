@@ -1,0 +1,27 @@
+sudo apt-get install build-essential bison openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-0 libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev
+
+bash < <( curl http://rvm.beginrescueend.com/releases/rvm-install-head )
+
+vim ~/.bashrc
+# put path stuff before this
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
+# list rubies
+rvm list
+rvm install 1.9.2
+rvm 1.9.2
+rvm list
+rvm gemset create foo
+rvm gemset use foo
+
+gem install jekyll
+
+git init
+dir structure:
+
+Resources
+http://rvm.beginrescueend.com/rvm/install/
+http://joneslee85.wordpress.com/2010/04/11/howto-install-multiple-ruby-version-with-rvm/
+http://help.github.com/post-receive-hooks/
+http://rvm.beginrescueend.com/gemsets/using/
+https://github.com/qrush/litanyagainstfear
