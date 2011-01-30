@@ -1,0 +1,31 @@
+Chapter 01
+====
+
+Checkers Learning Problem
+----
+* (T)ask T: playing checkers
+* (P)ermformance measure P: % of games won
+* Training (E)xperience E:
+
+System Design
+----
+1. knowledge to be learned
+2. representation of knowledge
+3. learning mechanism
+
+Choosing a target function
+----
+The knowledge we want to learn is the best legal move.  We can best represent this as a function or program.  One common strategy is to reduce improving performance P at task T to the problem of learning a *target function*.
+
+Let's try using this as our terget function:
+ChooseMove: B -> M
+
+def choose_move(board_state)
+	return best_move
+
+An alternative to ChooseMove would a function that scores a given board state:
+V: B -> R
+
+def v(board_state)
+	return score
+
