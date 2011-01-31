@@ -1,0 +1,147 @@
+http://en.wikipedia.org/wiki/Least_mean_squares_filter
+http://en.wikipedia.org/wiki/Stochastic_gradient_descent
+http://en.wikipedia.org/wiki/Stochastic
+
+Concept Learning
+====
+Acquiring the definition of a general category given a sample of positive and negative training examples.  Classification?  Binary?
+
+Concept learning - inferring a boolean0valued function from training xamples of its input and output.
+
+Examples of "concepts".  Is this a bird?  Car?  Is this spam?
+
+General to specific ordering of hypothesis
+
+Concept learning tasks:
+1. the set of instances over which the target function is defined, 
+2. the target function
+3. the set of candidate hypothesis
+4. training examples
+
+
+Terminology
+----
+instances (X) - set of items over which the concept is defined (ex. (?, ?, cold, humid, ?, ?), denoted by X
+
+in book examples, X is the set of all possible days represented by attributes
+
+target concept (c) - the concept or function to be learned
+
+c: X -> {0, 1}
+
+the target function is every instance yields a true or false
+
+positive examples - c(x) = 1
+negative examples - c(x) = 2
+
+Training example:
+(x, c(x))
+
+D - set of all available training examples
+H - set of all possible hypotheses
+h: X -> {0,1}
+
+The learner is to fine h such that h(x) = c(x) for all x in X
+
+That is... the hypothesis function takes any instance x from the set of all instances, X... and returns a true or false.  The learner should find a hypothesis such that the hypothes for an insance, x, is equal to the value that is retruned by the target concept for that instance.
+
+We're trying to get a hypothesis that matches with the concept, but we don't know the entirity of the concept.  That is, we only know the value of c over the training data.  Consequently, we can only gaurantee that the hypotheses matches the concept over the training data.  This is inductive learning.
+
+inductive learning hypothesis - any hypothesis found to approximate the target concept over a sufficient set of training examples will be able to approximate the target concept over examples outside of the training set
+
+General to Specific Ordering of Hypothesis
+----
+given two hypthesis, hj and hk, hj is more general iff any instance that satisfies hk also satisfies hj
+
+for all instances in X, hypotheses hk at instance x is true -> hypothesis hj at instance x is true
+
+more_general_than
+>g
+
+more_general_than_or_equal
+>
+- g
+
+Find-S - Finding a Maximally Specific Hypthosesis
+----
+Outputs the most specific hypothesis that is consistent with the positive training data
+
+Init hypothesis, h, to the most specific in set of all possible H.
+For every positive training instance
+	For each attribute constraint ai in h
+		If the constraint ai is satisified by x
+		Then do nothing
+		Else replace constraint ai in h by the next more general constraint
+
+Again...
+Choose the most specific hypothesis you can start with
+Go through every postitive training instance
+For every attribute in the instance, if the attrib doesn't match the attrib from the positive training instance...
+	Make that particular attrib more general
+
+This doesn't take into account negative training!
+	
+If we're using a hypothesis space that's the conjunction of attribute constraints, Find-S guarantees the most specific h within H that is consistent with positive training examples.
+
+Issues
+* there are many target concepts, Find-S finds one... but what about the others (they are consistent as well)?  It's preferable to determine if the right concept has been found.
+* why not prefer most general rather than most specific?
+* bad training examples will throw off Find-S
+* what about hypothesis spaces with more than one "most specific" h
+
+Version Spaces and the Candidate-Elimination Algorithm
+----
+Outputs the set of all hypothesis that are consistent with the training data (but not by enumeration, instead by description).
+
+Does not do well with noisy training data.
+
+A hypothesis is consistent with a set of training data, D iff hypothesis at instance x is equal to concept at instance x (h(x) = c(x)) for every training data (x, c(x)) in D.
+
+version space - the set of all hypotheses consistent with the observed training examples (VS H,D)
+
+List-Then-Eliminate
+----
+Represent the version space, that is, all of the the hypotheses consistent with the training data, D... by finding ALL hypothesis in H... the eliminating the ones that are inconsistent.
+
+Should work when hypothesis space is reasonably finite.
+
+Compact Representation of Version Spaces
+
+Candidate-Eliminiation
+----
+The hypothesis space is bounded by general and specific hypotheses, everything inbetween is partially ordered.	We find the most specific hypthesis in the version space, S, and the most general, G.  The version space is then the hypotheses that like between these two sets in the general-to-specific partial ordering.
+
+Algorithm
+Start with most specific and most general.
+Go through all training data, D
+If it's positive,
+	remove g from G that is not consistent
+	any s in S that is not consistent should be generalized minimally
+	if there's an s that's more general than the other s's, remove it
+	make sure it's not more general than G
+If it's negative, do opposite
+
+negative examples make G more specific
+positive examples make S more general
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

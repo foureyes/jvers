@@ -6,6 +6,9 @@ vim ~/.bashrc
 # put path stuff before this
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
+# source it
+. .bashrc
+
 # list rubies
 rvm list
 rvm install 1.9.2
