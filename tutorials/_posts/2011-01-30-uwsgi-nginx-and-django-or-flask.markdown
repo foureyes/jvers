@@ -1,4 +1,4 @@
-Testing post receive!
+ASDFASDFASDFASDF
 
 # uwsgi
 http://projects.unbit.it/uwsgi/
