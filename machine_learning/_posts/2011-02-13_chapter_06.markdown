@@ -1,0 +1,29 @@
+Chapter 06 - Bayesian Learning
+====
+
+* Requires initial knowledge of many probabilities.
+* Significant computational cost to determine Bayes optimal hypothesis.
+* Bayes theorem porvides a way to calculate the probability of a hypothesis based on its prior probability, the probability of observing various data given the hypothesis, and the observed data itself
+
+Definitions
+P(h) - prior probability  of h - initial probability that hypothesis h holds before any observed training data (background knowledge)
+
+without background knowledge, the same prior probability could be applied to every possible candidate hypothesis.
+
+P(D) - the prior probability that the training data D will be observed (that is... the probability of D given no knowledge about which h holds)
+
+P(D|h) - probability of observing data D given some world in which hypothesis h holds
+
+P(h|D) - posterior probability of h, probability that h holds given the training data D
+
+the posterior probability - P(h|D)
+
+p(h|D) = P(D|h) P(h)
+        ------------
+				   P(D)
+
+the probability of the hypothesis holding true given the training data, D...
+
+The probability of observing dasta D given a hypothsis h times the prior probability of h... over the prior probability that the training data D will be observed (regardless about hypothesis)
+
+page 156
