@@ -1,0 +1,5 @@
+How are decision trees resilient to noise, if one of the concerns of decision tree learning is overfitting due to incorrect trainig data?  Doew this assume some extension to the decision tree algorithm (like pruning).
+
+Intuitively... wouldn't any value of entropy between 0 and 1 for a binary outcome be 1?  That is... we would have to send one bit of data.
+
+

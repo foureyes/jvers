@@ -1,6 +1,7 @@
 http://en.wikipedia.org/wiki/Least_mean_squares_filter
 http://en.wikipedia.org/wiki/Stochastic_gradient_descent
 http://en.wikipedia.org/wiki/Stochastic
+ok_
 
 Concept Learning
 ====
@@ -124,22 +125,33 @@ If it's negative, do opposite
 negative examples make G more specific
 positive examples make S more general
 
+The S bound is the result of previously encountered positive examples, so an h more general than S will cover anything ath S covers
+The G bound is the result of previously encountered negative, so an h more specific than g
+
+Issues with Version Spaces and Candidate Elimination
+----
+Candidate Elimination will converge towards a hypothesis that describes the target concept as longs as:
+1. No errors in training examples
+2. The hypothesis, h, that correctly describes the target concept actually exists in H
+
+This does not do well against training error.
+
+Requesting Training Examples
+----
+Now that we have a version space, how can the program "query" the version space to further bound the version space?
+
+Choose data that splits the version space by half (like guess who or 20 questions).  This will help refine the version space
+
+Partially Learned Concepts
+----
+Even if we have a large version space still available, we can attempt to classify data based on partially learned concepts.  Some data will be positive or negative based on every hypothesis in the version space.  However, there may be conflicts (these are the queries we would want to use for refining the version space!) that split the version space evenly.  Some data may lean to one side or another (by vote!).  The proportion of hypotheses voting positive can be interpreted as the probability that the instance is positive.
 
 
+Bias
+----
+There must be some bias in the system for inductive learning! Otherwise, we would only be sure of the training data.  In the book example, the bias was that we were only allowing conjunction.  We did not allow all 2^96 combinations of the features.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+The inductive bias of candidate learning is... is that the target concept c is contained in the given hypothesis space H
 
 
 
