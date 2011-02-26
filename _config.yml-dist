@@ -1,13 +1,3 @@
 base_url:		 http://veryslowly.com/test
 domain:      http://veryslowly.com/test
 res_base_url:http://veryslowly.com/test
-
-source:      .
-destination: ./_site
-plugins:     ./_plugins
-
-future:      true
-lsi:         false
-pygments:    false
-markdown:    maruku
-permalink:   date
