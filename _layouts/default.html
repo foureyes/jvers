@@ -9,10 +9,31 @@
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
 </head>
 <body>
-<div id="you">
+<div id="content">
 	<div id="hd">
 		<h1>Joe Versoza is on the Internet!</h1>
 	</div><!-- #hd -->
+	<div id="nav">
+		<ul>
+			{% if page.title == 'blog' %}
+			<li class="selected">BLOG</li>
+			{% else %}
+			<li><a href="blog.html">BLOG</a></li>
+			{% endif %}
+
+			{% if page.title == 'about' %}
+			<li class="selected">ABOUT</li>
+			{% else %}
+			<li><a href="about.html">ABOUT</a></li>
+			{% endif %}
+
+			{% if page.title == 'projects' %}
+			<li class="selected">PROJECTS</li>
+			{% else %}
+			<li><a href="projects.html">PROJECTS</a></li>
+			{% endif %}
+		</ul>
+	</div><!-- #nav -->
 	{{ content }}
 </div><!-- #you -->
 </body>
