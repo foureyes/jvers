@@ -15,7 +15,7 @@ body {
 }
 
 #content {
-	background-image: url('/images/book-pages.png'); 
+	background-image: url('../images/book-pages.png'); 
 	background-repeat: repeat-y;
 	background-color: #e5e5de;
 	margin:auto;
