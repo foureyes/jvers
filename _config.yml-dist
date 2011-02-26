@@ -1,3 +1,6 @@
 base_url: http://veryslowly.com/test
 domain: http://veryslowly.com/test
 res_base_url: http://veryslowly.com/test
+
+exclude: machine_learning
+pygments: true
