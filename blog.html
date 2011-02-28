@@ -5,10 +5,8 @@ title: blog
 {% assign first_post = site.posts.first %}
 	<div id="bd">
 		<h2><a href="{{ first_post.url }}">{{ first_post.title }}</a></h2>
-		<div id="date">published {{ first_post.date | date_to_string }}</div>
-		<p>
+		<div id="date">{{ first_post.date | date_to_string }}</div>
 		{{ first_post.content }}
-		</p>
 	</div><!-- #bd -->
 	<div id="ft">
 		<h3>archive</h3>

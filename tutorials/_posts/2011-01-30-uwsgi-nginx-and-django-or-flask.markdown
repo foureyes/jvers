@@ -1,68 +1,57 @@
-editing this page.
------
-uwsgi
-http://projects.unbit.it/uwsgi/
+{% site.title %}
+### On Deploying Python Web Apps...###
+Ok.  You've picked a Python web framework that fits your project or your personal style.  You've coded up the foundation of your application using your framework's built-in dev server.  Now what?  There's a bunch of combinations of web servers, application servers and protocols to choose from!  Just look at this [hacker news thread] (http://news.ycombinator.com/item?id=1824171). 
 
-mod_wsgi daemonize mode
-http://countergram.com/pylons-lighttpd-flup
+One of the stacks I've been looking at involves using:
+* [nginx] (http://nginx.org/) as the web esrver
+* [uwsgi] (http://projects.unbit.it/uwsgi/) as the application container uwsgi
+* [daemontools] (http://cr.yp.to/daemontools.html) to daemonize 
 
-lots of different ways to deploy python
-http://news.ycombinator.com/item?id=1824171
+But why use this particular combination of technologies?  I've had experience with Python deployed on lighttpd and fastcgi, and it works pretty well.  It's fairly solid, and it logs exceptions to lighttpd's own error log.  Unfortunately, if you're deploying more than one app on it, reloading lighttpd will "blip" all of those applications.  Also, occasionally, some fastcgi processes don't get killed if lighttpd shuts down uncleanly.  This leads to incredibly perplexing behavior once lighttpd comes up!
 
-maybe mod_wsgi doesn't look appealing (blocking) on your web server (nginx)
-http://blog.dscpl.com.au/2009/05/blocking-requests-and-nginx-version-of.html
+I've also taken a look at nginx and fastcgi managed by daemontools.  This also works ok, but I've had problems digging out stack traces when an app 500's.  I'm not entirely sure what's going on, but I suspect flup is swallowing the error somehow.
 
-maybe you're watching your python web app gobble up memory because your apache was tuned for php, not mod_wsgi or mod_python
-http://blog.dscpl.com.au/2009/03/load-spikes-and-excessive-memory-usage.html
+Of course, there are other reasons why you might consider this alternate setup.  Maybe Apache's mod_wsgi isn't an option because you've [tuned Apache to serve PHP] (http://blog.dscpl.com.au/2009/03/load-spikes-and-excessive-memory-usage.html).  Maybe you're unsure about [mod_wsgi on nginx] (http://blog.dscpl.com.au/2009/05/blocking-requests-and-nginx-version-of.html).  Whatever the case, uwsgi, seems to be a legitimate choice for deploying Python web apps.  Here's a quick tour on how to get started with this stack.  I'll be using a simple [flask] (http://flask.pocoo.org/) app to test things out.
 
-compile everythin, linode
-http://library.linode.com/web-servers/nginx/python-uwsgi/ubuntu-10.10-maverick#create_uwsgi_init_script
-
-
-example configs
-http://projects.unbit.it/uwsgi/wiki/Example
-
-packaging nginx
-http://ubuntuforums.org/showthread.php?p=6953724%3E
-
-add-apt-repository isn't installed by default. You have to install the python-software-properties package first.
-https://launchpad.net/ubuntu/+ppas
+### Stable nginx Comes With uwsgi ###
+The latest stable version of nginx comes with a module that allows it to communicate with a uwsgi applications server.  You can compile the latest stable version of nginx by source or by [creating a deb package] (http://ubuntuforums.org/showthread.php?p=6953724%3E).  However, I've found that the easiest way to install it is by using the [nginx personal package archive] (http://wiki.nginx.org/Install).  
+{% highlight bash %}
+# install python-software-properties to get add-apt-repository
 sudo apt-get install python-software-properties
 
-stable version of nginx since 8.4 comes w/ uwsgi module included
-http://wiki.nginx.org/Install
-install from the personal package
 sudo add-apt-repository ppa:nginx/stable
 sudo apt-get update 
 sudo apt-get install nginx
+{% endhighlight %}
 
-uwsgi
-apt-get update
-apt-get upgrade
+### Installing uwsgi ###
+As of writing this, the actual uwsgi binary (which is distinct from the module that allows nginx to communicate with a uwsgi server) doesn't seem to exist as a .deb package.  However, it can be installed by source easily. 
+{% highlight bash %}
+#you'll have to install a few dependencies first...
 apt-get install build-essential psmisc python-dev libxml2 libxml2-dev python-setuptools
 
+#download and install uwsgi
 cd /opt/
 wget http://projects.unbit.it/downloads/uwsgi-0.9.6.6.tar.gz
 tar -zxvf uwsgi-0.9.6.6.tar.gz
 ln -s uwsgi-0.9.6.6/ uwsgi/
 cd uwsgi/
 python setup.py install
+{% endhighlight %}
 
-adduser --system --no-create-home --disabled-login --disabled-password --group uwsgi
-chown -R uwsgi:uwsgi /opt/uwsgi
-touch /var/log/uwsgi.log
-chown uwsgi /var/log/uwsgi.log
-
-virtualenv
+### Flask ###
+Installing flask is straightforward; just use pip or easy_install.  Put it in a virtualenv specific to your app if you want to isolate the libraries that your project uses. 
+{% highlight bash %}
+# make a virtualenv for your app
 mkvirtualenv --no-site-packages uwsgi-flask-test
 easy_install yolk flask
 
-
-sample app
 sudo mkdir /opt/uwsgi-flask-test/
 sudo chown app:app /opt/uwsgi-flask-test/
 vim /opt/uwsgi-flask-test/myapp.py
+{% endhighlight %}
 
+This is the hello world app that I used to test out the nginx/uwsgi stack.
 {% highlight python %}
 from flask import Flask
 app = Flask(__name__)
@@ -76,12 +65,28 @@ if __name__ == '__main__':
 {% endhighlight %}
 
 
-uwsgi command
+### Running Your Flask App in uwsgi ###
+To run the hello world app under wsgi, we have to start it using the uwgi binary.  You can set the virtualenv that you're using by specifying a value for the --home option.  Also note that the name of your module should be passed into the --module option and the name of your application's wsgi callable (in this case, app) should be passed into the --callable option.
+{% highlight bash %}
 uwsgi -s 127.0.0.1:3031 --module myapp --callable app --home /home/app/.virtualenvuwsgi-flask-test/
+{% endhighlight %}
+
+This snippet will be used in your daemontools run script.  This is what /etc/service/uwsgi-flask-test/run should look like:
+{% highlight bash %}
+#!/bin/sh
+
+exec su - app -c "uwsgi -s 127.0.0.1:3031 --module myapp --callable app --home /home/app/.virtualenvs/uwsgi-flask-test/ --pythonpath /opt/uwsgi-flask-test/ --logto /tmp/uwsgi.log"
+{% endhighlight %}
 
 nginx config
+{% highlight bash %}
+uwsgi command
 sudo vim /etc/nginx/sites-available/uwsgi-flask-test
+{% endhighlight %}
 
+### Putting it All Together With nginx ###
+Finally, nginx has to be configured to connect to you uwsgi server.  Create a file called /etc/nginx/sites-available/uwsgi-flask-test.
+{% highlight nginx %}
 server {
 	listen       7777;
 
@@ -90,17 +95,29 @@ server {
 		uwsgi_pass 127.0.0.1:3031;
 	}
 }
+{% endhighlight %}
 
+Finally, enable your new configuration and restart.
+{% highlight nginx %}
 sudo ln -s /etc/nginx/sites-available/uwsgi-flask-test /etc/nginx/sites-enabled/uwsgi-flask-test
 sudo /etc/init.d/nginx restart
+{% highlight nginx %}
 
 
-trouble shooting
-404
-check uwsgi output - no 404.... indpect nginx configs, otherwise check you app's route's
-502
-uwsgi not running
-ports don't match
-perms on socket?
+### Troubleshooting ###
+* 404
+    * check uwsgi output - no 404.... indpect nginx configs, otherwise check you app's route's
+* 502
+    * uwsgi not running
+    * ports don't match
+    * perms on socket?
 
+### Some Links ###
+mod_wsgi daemonize mode
+http://countergram.com/pylons-lighttpd-flup
 
+compile everythin, linode
+http://library.linode.com/web-servers/nginx/python-uwsgi/ubuntu-10.10-maverick#create_uwsgi_init_script
+
+example configs
+http://projects.unbit.it/uwsgi/wiki/Example

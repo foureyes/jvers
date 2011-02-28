@@ -14,6 +14,48 @@ body {
 	font-family:'TeXGyreScholaRegular';
 }
 
+a {
+	color:#00611C;
+}
+
+a:hover {
+	color:#804f24;
+}
+
+a:visited {
+	color:#5D9160;
+}
+
+p {
+	padding-top:1em;
+}
+
+h1 {
+	font-size:25px;
+}
+
+h2 {
+	padding-top:1em;
+	font-size:20px;
+}
+
+h2 a {
+	padding-top:1em;
+	text-decoration:none;
+	font-size:20px;
+	color:#000;
+}
+
+h3 {
+	padding-top:1em;
+	font-size:18px;
+	color:#602f04;
+}
+
+ul {
+	margin-left:2em;
+}
+
 #content {
 	background-image: url('../images/book-pages.png'); 
 	background-repeat: repeat-y;
@@ -36,11 +78,6 @@ body {
 	text-align:center;
 }
 
-h1 {
-	margin:0em;
-	padding:0em;
-	font-size:25px;
-}
 
 #nav ul {
 	list-style-type: none;
