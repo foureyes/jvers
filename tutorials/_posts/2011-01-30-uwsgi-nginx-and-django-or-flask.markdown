@@ -1,4 +1,5 @@
 ---
+layout: post
 title: Python Web App Deployment With nginx, uwsgi and daemontools
 ---
 ### On Deploying Python Web Apps...###

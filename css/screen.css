@@ -42,7 +42,7 @@ h2 {
 
 h2 a {
 	padding-top:1em;
-	text-decoration:none;
+	/*text-decoration:none;*/
 	font-size:22px;
 	/*color:#000;*/
 }
