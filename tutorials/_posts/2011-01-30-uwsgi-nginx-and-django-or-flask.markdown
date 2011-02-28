@@ -1,4 +1,6 @@
-{% site.title %}
+---
+title: Python Web App Deployment With nginx, uwsgi and daemontools
+---
 ### On Deploying Python Web Apps...###
 Ok.  You've picked a Python web framework that fits your project or your personal style.  You've coded up the foundation of your application using your framework's built-in dev server.  Now what?  There's a bunch of combinations of web servers, application servers and protocols to choose from!  Just look at this [hacker news thread] (http://news.ycombinator.com/item?id=1824171). 
 
@@ -11,7 +13,16 @@ But why use this particular combination of technologies?  I've had experience wi
 
 I've also taken a look at nginx and fastcgi managed by daemontools.  This also works ok, but I've had problems digging out stack traces when an app 500's.  I'm not entirely sure what's going on, but I suspect flup is swallowing the error somehow.
 
-Of course, there are other reasons why you might consider this alternate setup.  Maybe Apache's mod_wsgi isn't an option because you've [tuned Apache to serve PHP] (http://blog.dscpl.com.au/2009/03/load-spikes-and-excessive-memory-usage.html).  Maybe you're unsure about [mod_wsgi on nginx] (http://blog.dscpl.com.au/2009/05/blocking-requests-and-nginx-version-of.html).  Whatever the case, uwsgi, seems to be a legitimate choice for deploying Python web apps.  Here's a quick tour on how to get started with this stack.  I'll be using a simple [flask] (http://flask.pocoo.org/) app to test things out.
+Of course, there are other reasons why you might consider this alternate setup.  Maybe Apache's mod_wsgi isn't an option because you've [tuned Apache to serve PHP] (http://blog.dscpl.com.au/2009/03/load-spikes-and-excessive-memory-usage.html).  Maybe you're unsure about [mod_wsgi on nginx] (http://blog.dscpl.com.au/2009/05/blocking-requests-and-nginx-version-of.html).  Whatever the case, uwsgi, seems to be a legitimate choice for deploying Python web apps.  Here's a quick tour on how to get started with this stack.  I'll be using a simple [flask] (http://flask.pocoo.org/) app to test things out.  I'll go over the following:
+
+1. Installing the latest stable nginx
+2. Installing uwsgi
+3. Creating a Flask hello world
+4. Running your Flask app with uwsgi
+5. Hooking everything up with your nginx config
+6. Managing your uwsgi server with daemontools
+
+
 
 ### Stable nginx Comes With uwsgi ###
 The latest stable version of nginx comes with a module that allows it to communicate with a uwsgi applications server.  You can compile the latest stable version of nginx by source or by [creating a deb package] (http://ubuntuforums.org/showthread.php?p=6953724%3E).  However, I've found that the easiest way to install it is by using the [nginx personal package archive] (http://wiki.nginx.org/Install).  
@@ -66,26 +77,13 @@ if __name__ == '__main__':
 
 
 ### Running Your Flask App in uwsgi ###
-To run the hello world app under wsgi, we have to start it using the uwgi binary.  You can set the virtualenv that you're using by specifying a value for the --home option.  Also note that the name of your module should be passed into the --module option and the name of your application's wsgi callable (in this case, app) should be passed into the --callable option.
+To run the hello world app under wsgi, we have to start it using the uwgi binary.  You can set the virtualenv that you're using by specifying a value for the --home option.  Also note that the name of your module should be passed into the --module option and the name of your application's wsgi callable (in this case, app) should be passed into the --callable option.  Run this command to start up your uwsgi server.
 {% highlight bash %}
 uwsgi -s 127.0.0.1:3031 --module myapp --callable app --home /home/app/.virtualenvuwsgi-flask-test/
 {% endhighlight %}
 
-This snippet will be used in your daemontools run script.  This is what /etc/service/uwsgi-flask-test/run should look like:
-{% highlight bash %}
-#!/bin/sh
-
-exec su - app -c "uwsgi -s 127.0.0.1:3031 --module myapp --callable app --home /home/app/.virtualenvs/uwsgi-flask-test/ --pythonpath /opt/uwsgi-flask-test/ --logto /tmp/uwsgi.log"
-{% endhighlight %}
-
-nginx config
-{% highlight bash %}
-uwsgi command
-sudo vim /etc/nginx/sites-available/uwsgi-flask-test
-{% endhighlight %}
-
 ### Putting it All Together With nginx ###
-Finally, nginx has to be configured to connect to you uwsgi server.  Create a file called /etc/nginx/sites-available/uwsgi-flask-test.
+Now that your Flask up is running with uwsgi, you'll have to configure nginx to connect to your uwsgi server.  Create a file called /etc/nginx/sites-available/uwsgi-flask-test.
 {% highlight nginx %}
 server {
 	listen       7777;
@@ -97,27 +95,35 @@ server {
 }
 {% endhighlight %}
 
-Finally, enable your new configuration and restart.
+Enable your new configuration and restart.
 {% highlight nginx %}
 sudo ln -s /etc/nginx/sites-available/uwsgi-flask-test /etc/nginx/sites-enabled/uwsgi-flask-test
 sudo /etc/init.d/nginx restart
-{% highlight nginx %}
+{% endhighlight %}
+
+You should be able to hit your webserver (in the example case, localhost:7777/uwsgi-flastk-test/) to see your app.  If there's an issue, you can check the output of your uwsgi server.  If there's no output, go over your nginx configuration and your uwsgi startup parameters.  Once you have everything setup, you can have daemontools manage your uwsgi server.  Just modify the run-script from above and put it in your urn script.  For example, /etc/service/uwsgi-flask-test/run should look like:
+{% highlight bash %}
+#!/bin/sh
+
+exec su - app -c "uwsgi -s 127.0.0.1:3031 --module myapp --callable app --home /home/app/.virtualenvs/uwsgi-flask-test/ --pythonpath /opt/uwsgi-flask-test/ --logto /tmp/uwsgi.log"
+{% endhighlight %}
 
 
 ### Troubleshooting ###
-* 404
-    * check uwsgi output - no 404.... indpect nginx configs, otherwise check you app's route's
-* 502
-    * uwsgi not running
-    * ports don't match
-    * perms on socket?
+* 404 - where'd my page go?
+   * Check uwsgi output.  If it's not showing a 404...
+   * Inspect nginx configs.
+   * Otherwise check you app's routes.
+* 502 - bad, bad gateway
+   * First make sure your uwsgi is running!
+   * If it's running, does the port in your nginx config match the one specified in your uwsgi start script? 
+   * If you're using sockets, check the perms.
 
-### Some Links ###
-mod_wsgi daemonize mode
-http://countergram.com/pylons-lighttpd-flup
-
-compile everythin, linode
-http://library.linode.com/web-servers/nginx/python-uwsgi/ubuntu-10.10-maverick#create_uwsgi_init_script
+### Someone's Definitely Done This Already ###
+I've pieced together this tutorial with some help from the internet and a bit of trial and error.  Here are some more resources:
+* Linode has an in-depth [article] ( http://library.linode.com/web-servers/nginx/python-uwsgi/ubuntu-10.10-maverick#create_uwsgi_init_script) on doing the whole nginx with uwsgi thing as well...
+* So does [this blog] (http://timothyfletcher.com/blog/running-django-apps-on-nginx-and-uwsgi/)
+* And [this blog] (http://www.jeremybowers.com/blog/post/5/django-nginx-and-uwsgi-production-serving-millions-page-views/)
 
 example configs
 http://projects.unbit.it/uwsgi/wiki/Example

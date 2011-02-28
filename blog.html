@@ -4,8 +4,7 @@ title: blog
 ---
 {% assign first_post = site.posts.first %}
 	<div id="bd">
-		<h2><a href="{{ first_post.url }}">{{ first_post.title }}</a></h2>
-		<div id="date">{{ first_post.date | date_to_string }}</div>
+		<h2><a href="{{ first_post.url }}">{{ first_post.title }}</a>&nbsp;<span class="date">({{ first_post.date | date_to_string }})</span></h2>
 		{{ first_post.content }}
 	</div><!-- #bd -->
 	<div id="ft">
