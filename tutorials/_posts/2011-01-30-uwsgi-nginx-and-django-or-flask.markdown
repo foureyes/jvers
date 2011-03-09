@@ -2,7 +2,7 @@
 layout: post
 title: Python Web App Deployment With nginx, uwsgi and daemontools
 ---
-### Test On Deploying Python Web Apps...###
+### On Deploying Python Web Apps...###
 Ok.  You've picked a Python web framework that fits your project or your personal style.  You've coded up the foundation of your application using your framework's built-in dev server.  Now what?  There's a bunch of combinations of web servers, application servers and protocols to choose from!  Just look at this [hacker news thread] (http://news.ycombinator.com/item?id=1824171). 
 
 One of the stacks I've been looking at involves using:
