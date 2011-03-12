@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: post
 title: blog
 ---
 {% assign first_post = site.posts.first %}
@@ -7,11 +7,8 @@ title: blog
 		<h2><a href="{{ first_post.url }}">{{ first_post.title }}</a>&nbsp;<span class="date">({{ first_post.date | date_to_string }})</span></h2>
 		{{ first_post.content }}
 	</div><!-- #bd -->
-	<div id="ft">
-		<h3>archive</h3>
-		<ul id="archive">
-		{% for post in site.posts %}
-		<li><a href="{{ post.url }}">{{ post.title }}</a><abbr>{{ post.date | date_to_string }}</abbr></li>
-		{% endfor %}
-		</ul>
-	</div><!-- #ft -->
+{% for post in site.posts limit:2 %} 
+	{% if forloop.last %}
+		<a href="{{ post.url }}">&lt;&lt;Previous {{ post.title }}</a>
+	{% endif %}
+{% endfor %} 

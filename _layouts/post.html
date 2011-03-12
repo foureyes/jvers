@@ -15,27 +15,33 @@
 		<h1>Joe Versoza is on the Internet!</h1>
 	</div><!-- #hd -->
 	<div id="nav">
-		<ul>
-			{% if page.title == 'blog' %}
-			<li class="selected">BLOG</li>
-			{% else %}
-			<li><a href="{{ site.base_url }}/blog.html">BLOG</a></li>
-			{% endif %}
-
-			{% if page.title == 'about' %}
-			<li class="selected">ABOUT</li>
-			{% else %}
-			<li><a href="{{ site.base_url }}/about.html">ABOUT</a></li>
-			{% endif %}
-
-			{% if page.title == 'projects' %}
-			<li class="selected">PROJECTS</li>
-			{% else %}
-			<li><a href="{{ site.base_url }}/projects.html">PROJECTS</a></li>
-			{% endif %}
-		</ul>
+		{% include nav.html %}
 	</div><!-- #nav -->
 	{{ content }}
+	<div id="ft">
+		<!--
+		<div class="archive">
+		<h3>archive</h3>
+		<ul id="archive">
+		{% for post in site.posts %}
+		<li><a href="{{ post.url }}">{{ post.title }}</a><abbr>{{ post.date | date_to_string }}</abbr></li>
+		{% endfor %}
+		</ul>
+		</div>
+		-->
+		<div class="pagination">
+			{% if page.previous %}
+				<a href="{{ page.previous.url }}">&lt&ltPrevious  {{ page.previous.title }}</a>
+			{% endif %}
+			{% if page.previous and page.next%}
+			|
+			{% endif %}
+			{% if page.next %}
+				<a href="{{ page.next.url }}">{{ page.next.title }} Next&gt;&gt;</a>
+			{% endif %}
+		</div>
+	</div><!-- #ft -->
+	
 </div><!-- #you -->
 </body>
 </html>
