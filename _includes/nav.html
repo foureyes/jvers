@@ -1,0 +1,19 @@
+		<ul>
+			{% if page.title == 'blog' or page.layout == 'post'%}
+			<li class="selected">BLOG</li>
+			{% else %}
+			<li><a href="{{ site.base_url }}/blog.html">BLOG</a></li>
+			{% endif %}
+
+			{% if page.title == 'about' %}
+			<li class="selected">ABOUT</li>
+			{% else %}
+			<li><a href="{{ site.base_url }}/about.html">ABOUT</a></li>
+			{% endif %}
+
+			{% if page.title == 'projects' %}
+			<li class="selected">PROJECTS</li>
+			{% else %}
+			<li><a href="{{ site.base_url }}/projects.html">PROJECTS</a></li>
+			{% endif %}
+		</ul>
