@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: index
 title: blog
 ---
 {% assign first_post = site.posts.first %}
@@ -7,8 +7,3 @@ title: blog
 		<h2><a href="{{ first_post.url }}">{{ first_post.title }}</a>&nbsp;<span class="date">({{ first_post.date | date_to_string }})</span></h2>
 		{{ first_post.content }}
 	</div><!-- #bd -->
-{% for post in site.posts limit:2 %} 
-	{% if forloop.last %}
-		<a href="{{ post.url }}">&lt;&lt;Previous {{ post.title }}</a>
-	{% endif %}
-{% endfor %} 

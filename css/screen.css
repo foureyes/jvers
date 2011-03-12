@@ -164,6 +164,12 @@ ul, ol {
 */
 }
 
+#ft .pagination {
+	padding-top:2em;
+	text-align:center;
+	width:100%;
+}
+
 
 @font-face {
     font-family: 'TeXGyreScholaRegular';
