@@ -1,7 +1,6 @@
-paginate: 1
-base_url: http://veryslowly.com/test
-domain: http://veryslowly.com/test
-res_base_url: http://veryslowly.com/test
+base_url: http://jvers.com/
+domain: http://jvers.com/
+res_base_url: http://jvers.com/resources
 
 exclude: machine_learning
 pygments: true

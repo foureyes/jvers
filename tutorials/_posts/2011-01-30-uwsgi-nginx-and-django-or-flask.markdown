@@ -125,6 +125,3 @@ I've pieced together this tutorial with some help from the internet and a bit of
 * Linode has an in-depth [article] ( http://library.linode.com/web-servers/nginx/python-uwsgi/ubuntu-10.10-maverick#create_uwsgi_init_script) on doing the whole nginx with uwsgi thing as well...
 * So does [this blog] (http://timothyfletcher.com/blog/running-django-apps-on-nginx-and-uwsgi/)
 * And [this blog] (http://www.jeremybowers.com/blog/post/5/django-nginx-and-uwsgi-production-serving-millions-page-views/)
-
-example configs
-http://projects.unbit.it/uwsgi/wiki/Example
