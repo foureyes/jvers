@@ -20,13 +20,15 @@
 	{{ content }}
 	<div id="ft">
 		{% include archive.html %}
+		{% if page.title == 'blog' or page.layout == 'post'%}
 		<div class="pagination">
 		{% for post in site.posts limit:2 %} 
 			{% if forloop.last %}
 				<a href="{{ post.url }}">&lt;&lt;&nbsp;&nbsp; {{ post.title }}</a>
 			{% endif %}
 		{% endfor %} 
-		</div>
+		</div><!-- .pagination -->
+		{% endif %}
 	</div><!-- #ft -->
 	
 </div><!-- #you -->
