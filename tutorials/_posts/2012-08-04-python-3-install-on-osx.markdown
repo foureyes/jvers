@@ -3,32 +3,25 @@
 ##Install Instructions:
 ##Verification Process:
 
-XCode4 (Developer Tools)
+XCode (Developer Tools)
 =====
 ##Overview:
-XCode4 includes Apple's IDE, XCode, and various developer tools, such as gcc.
+XCode includes Apple's IDE, XCode, and various developer tools, such as gcc.
 
 ##Rationale:
 Having gcc will allow installation of Python libraries that require compilation (for example, the Python PostgreSQL adapter, needs to be compiled).  Having gcc will allow customized compilation of libraries and applications, making it possible to install these libraries and applications into specific locations.  As a result, administrative access may not be necessary for some future installations, and these future installations would be isolated to the current user.
 
-##Install Instructions:
-1. Go to http://developer.apple.com/xcode/.
-2. Follow the links to the "App Store".
-3. Allow App Store to open.
-4. Install the free app.
+##Install Instructions
+Install using the Snow Leopard DVD.  Newer versions of XCode may not be compatible with Snow Leopard.  However, older versions are not available through the app store unless you're part of the developer program.
 
-## Verification Process:
-1. If not __user__, log in __as user__.
-2. In terminal...
-3. `/Developer/usr/bin/gcc --version` # should return gcc version number (note that gcc is probably not in path, so used absolute path).
-
+##Verification Process:
 git
 =====
 ##Overview:
 git is an open source distributed version control system.
 
 ##Rationale:
-Using a source code management tool is required for any programming task.  It is necessary for version tracking/back up and collaboration. 
+Using a source code management tool is required for version control/back up and collaboration. 
 
 ##Install Instructions:
 1. Follow the links in http://code.google.com/p/git-osx-installer/ to download the installer.
