@@ -182,8 +182,8 @@ ruby <(curl -fsSk https://raw.github.com/mxcl/homebrew/go)
 brew install git
 brew install python3 
 brew link python3
-brew install mercurial 
-brew install sdl sdl_image sdl_mixer sdl_ttf smpeg portmidi
+python3 --version
+brew install mercurial sdl sdl_image sdl_mixer sdl_ttf smpeg portmidi
 in .profile: export PATH=$PATH:/usr/local/share/python3/
-/usr/local/share/python3/easy_install pip
+look for pip
 pip install virtualenv virtualenvwrapper
