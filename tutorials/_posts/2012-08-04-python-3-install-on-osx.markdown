@@ -181,8 +181,21 @@ Alternate Install Using Homebrew
 ruby <(curl -fsSk https://raw.github.com/mxcl/homebrew/go)
 brew install git
 brew install python3 
+
+Error: The linking step did not complete successfully
+The formula built, but is not symlinked into /usr/local
+You can try again using `brew link python3'
+
 brew link python3
+
 python3 --version
 brew install mercurial libpng libjpg sdl sdl_image sdl_mixer sdl_ttf smpeg portmidi
 in .profile: export PATH=$PATH:/usr/local/share/python3/
 pip install hg+http://bitbucket.org/pygame/pygame
+
+Warning: You have Xcode-3.2, which is outdated.
+Warning: m4 macros were installed to "share/aclocal".
+Error: smpeg is a head-only formula
+
+pip install beautifulsoup4 bottle hg+http://bitbucket.org/pygame/pygame
+
