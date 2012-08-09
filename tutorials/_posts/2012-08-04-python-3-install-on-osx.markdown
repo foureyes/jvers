@@ -183,7 +183,70 @@ brew install git
 brew install python3 
 brew link python3
 python3 --version
-brew install mercurial sdl sdl_image sdl_mixer sdl_ttf smpeg portmidi
+brew install mercurial libpng libjpg sdl sdl_image sdl_mixer sdl_ttf smpeg portmidi
 in .profile: export PATH=$PATH:/usr/local/share/python3/
-look for pip
-pip install virtualenv virtualenvwrapper
+
+Output from history
+  1  python
+    2  gcc
+    3  ifconfig
+    4  updated README [foureyes]
+    5  vim ~/.profile
+    6  pip install bottle
+    7  python3
+    8  pip install hg+http://bitbucket.org/pygame/pygame
+    9  ls
+   10  ls
+   11  cd ~/Downloads/
+   12  ls
+   13  ls -lt
+   14  vim pygame_image.py 
+   15  ls
+   16  python pygame_image.py 
+   17  pythone pygame_image.py 
+   18  python3 pygame_image.py 
+   19  vim pygame_image.py 
+   20  python3 pygame_image.py 
+   21  brew install libjpg
+   22  python3 pygame_image.py 
+   23  pip install hg+http://bitbucket.org/pygame/pygame
+   24  python3 pygame_image.py 
+   25  brew install libpng
+   26  brew install sdl sdl_image sdl_mixer sdl_ttf smpeg portmidi
+   27  brew help
+   28  brew uninstall sdl sdl_image sdl_mixer sdl_ttf smpeg portmidi
+   29  brew uninstall sdl sdl_image sdl_mixer sdl_ttf smpeg portmidi
+   30  brew uninstall sdl sdl_image
+   31  brew install sdl sdl_image
+   32  python3 pygame_image.py 
+   33  pip install hg+http://bitbucket.org/pygame/pygame
+   34  python3 pygame_image.py 
+   35  ls
+   36  cd ~
+   37  hg clone https://bitbucket.org/pygame/pygame
+   38  ls
+   39  cd pygame/
+   40  ls
+   41  python config.py 
+   42  python3 setup.py 
+   43  pip -l
+   44  pip
+   45  pip help
+   46  pip uninstall
+   47  pip help uninstall
+   48  pip uninstall pygame
+   49  ls
+   50* 
+   51  pwd
+   52  python config.py 
+   53  python setup.py 
+   54  whidh python
+   55  python3 setup.py 
+   56  pip install hg+http://bitbucket.org/pygame/pygame
+   57  ls
+   58  cd ~/Downloads/
+   59  ls
+   60  python pygame_image.py 
+   61  python3 pygame_image.py 
+   62  history
+
