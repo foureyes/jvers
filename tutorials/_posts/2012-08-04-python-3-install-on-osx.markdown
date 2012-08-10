@@ -15,6 +15,47 @@ Install using the Snow Leopard DVD.  Newer versions of XCode for Snow Leopard ma
 ##Verification Process:
 In older version of XCode, you get gcc... so `which gcc` should give you something like: `/usr/bin/gcc`
 
+Homebrew, Required Libraries and Python 3
+=====
+## Overview:
+Homebrew is a package management system for OSX.  It will be used to install necessary libraries (git, mercurial, sdl, etc), as well as Python 3.
+
+## Install Instructions:
+`ruby <(curl -fsSk https://raw.github.com/mxcl/homebrew/go)` # install homebrew
+`brew install git` # install git
+`brew install python3` # install python3
+
+If you get this error 
+`Error: The linking step did not complete successfully`
+`The formula built, but is not symlinked into /usr/local`
+
+You can try again using:
+`brew link python3`
+
+Check the install by using this command
+`python3 --version`
+
+`brew install mercurial libpng libjpg sdl sdl_image sdl_mixer sdl_ttf smpeg portmidi` # install required libraries
+
+create a .profile in the user's home directory and drop this into it to get all of the Python 3 related binaries: 
+`export PATH=$PATH:/usr/local/share/python3/`
+
+`pip install beautifulsoup4 bottle hg+http://bitbucket.org/pygame/pygame`  # install some libraries
+
+That's it!
+
+These are some errors that you might see, but you can ignore:
+`Warning: You have Xcode-3.2, which is outdated.`
+`Warning: m4 macros were installed to "share/aclocal".`
+`Error: smpeg is a head-only formula`
+
+
+
+
+<hr>
+(alternate install assuming xcode is already setup)
+<br />
+
 git
 =====
 ##Overview:
@@ -175,27 +216,4 @@ workon mtec2002
 ## Verification Process:
 1. When you open terminal as __user__...
 2. You should see mtec2002 as a prefix to your prompt 
-
-Alternate Install Using Homebrew
-=====
-ruby <(curl -fsSk https://raw.github.com/mxcl/homebrew/go)
-brew install git
-brew install python3 
-
-Error: The linking step did not complete successfully
-The formula built, but is not symlinked into /usr/local
-You can try again using `brew link python3'
-
-brew link python3
-
-python3 --version
-brew install mercurial libpng libjpg sdl sdl_image sdl_mixer sdl_ttf smpeg portmidi
-in .profile: export PATH=$PATH:/usr/local/share/python3/
-pip install hg+http://bitbucket.org/pygame/pygame
-
-Warning: You have Xcode-3.2, which is outdated.
-Warning: m4 macros were installed to "share/aclocal".
-Error: smpeg is a head-only formula
-
-pip install beautifulsoup4 bottle hg+http://bitbucket.org/pygame/pygame
 
