@@ -21,33 +21,41 @@ Homebrew, Required Libraries and Python 3
 Homebrew is a package management system for OSX.  It will be used to install necessary libraries (git, mercurial, sdl, etc), as well as Python 3.
 
 ## Install Instructions:
-`ruby <(curl -fsSk https://raw.github.com/mxcl/homebrew/go)` # install homebrew
-`brew install git` # install git
-`brew install python3` # install python3
+
+### Python 3
+*`ruby <(curl -fsSk https://raw.github.com/mxcl/homebrew/go)` # install homebrew
+*`brew install git` # install git
+*`brew install python3` # install python3
 
 If you get this error 
+<br />
 `Error: The linking step did not complete successfully`
+<br />
 `The formula built, but is not symlinked into /usr/local`
 
 You can try again using:
+<br />
 `brew link python3`
 
 Check the install by using this command
+<br />
 `python3 --version`
 
+### Libraries and .profile
 `brew install mercurial libpng libjpg sdl sdl_image sdl_mixer sdl_ttf smpeg portmidi` # install required libraries
 
 create a .profile in the user's home directory and drop this into it to get all of the Python 3 related binaries: 
+<br />
 `export PATH=$PATH:/usr/local/share/python3/`
 
 `pip install beautifulsoup4 bottle hg+http://bitbucket.org/pygame/pygame`  # install some libraries
 
 That's it!
 
-These are some errors that you might see, but you can ignore:
-`Warning: You have Xcode-3.2, which is outdated.`
-`Warning: m4 macros were installed to "share/aclocal".`
-`Error: smpeg is a head-only formula`
+### These are some errors that you might see, but you can ignore:
+* `Warning: You have Xcode-3.2, which is outdated.`
+* `Warning: m4 macros were installed to "share/aclocal".`
+* `Error: smpeg is a head-only formula`
 
 
 
