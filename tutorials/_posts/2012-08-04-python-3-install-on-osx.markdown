@@ -23,9 +23,9 @@ Homebrew is a package management system for OSX.  It will be used to install nec
 ## Install Instructions:
 
 ### Python 3
-*`ruby <(curl -fsSk https://raw.github.com/mxcl/homebrew/go)` # install homebrew
-*`brew install git` # install git
-*`brew install python3` # install python3
+* `ruby <(curl -fsSk https://raw.github.com/mxcl/homebrew/go)` # install homebrew
+* `brew install git` # install git
+* `brew install python3` # install python3
 
 If you get this error 
 <br />
