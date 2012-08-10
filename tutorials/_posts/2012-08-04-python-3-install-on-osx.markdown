@@ -61,8 +61,54 @@ That's it!
 
 
 <hr>
-(alternate install assuming xcode is already setup)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(alternate install assuming xcode is already setup - can be ignored for now)
 <br />
+
 
 git
 =====
