@@ -3,10 +3,19 @@ layout: no-frills
 ---
 XCode (Developer Tools)
 =====
+
 <div markdown="1" style="border: 1px solid #000">
 * test
 * foo
 </div>
+
+
+<div markdown="1" style="border: solid 1px black">
+   This is a div with Markdown **strong text**
+</div>
+
+
+
 ##Overview:
 XCode includes Apple's IDE, XCode, and various developer tools, such as gcc.
 
